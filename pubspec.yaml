@@ -37,7 +37,8 @@ dependencies:
   pinput: ^6.0.2
   font_awesome_flutter: ^11.0.0
   crypto: ^3.0.7
-  permission_handler: ^13.0.2
+  permission_handler: ^11.3.0
+  sqlite3: ^3.5.2
 
 
 dev_dependencies:

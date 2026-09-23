@@ -137,8 +137,13 @@ class _TransactionEntrySheetState extends ConsumerState<TransactionEntrySheet> {
           _amountString = '0.';
           return;
         }
+        
         final parts = _amountString.split('.');
+        // Limit whole numbers to 9 digits (max 999,999,999) to prevent overflow
+        if (parts.length == 1 && parts[0].length >= 9 && value != '.') return;
+        // Limit decimal to 2 places
         if (parts.length == 2 && parts[1].length >= 2 && value != '⌫') return;
+        
         if (_amountString == '0' && value != '.') {
           _amountString = value;
         } else {
@@ -233,36 +238,41 @@ class _TransactionEntrySheetState extends ConsumerState<TransactionEntrySheet> {
               ),
 
             // ─── Scrollable content (hides when keyboard is open) ────────
-            if (!keyboardOpen) ...[
-              const SizedBox(height: 12),
-
-              // Type toggle
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                padding: const EdgeInsets.all(4),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _TypeButton(
-                      title: 'Expense',
-                      isSelected: _transactionType == 'expense',
-                      activeColor: AppColors.error,
-                      onTap: () => setState(() => _transactionType = 'expense'),
+            Offstage(
+              offstage: keyboardOpen,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 12),
+                  // Type toggle
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    _TypeButton(
-                      title: 'Income',
-                      isSelected: _transactionType == 'income',
-                      activeColor: AppColors.success,
-                      onTap: () => setState(() => _transactionType = 'income'),
+                    padding: const EdgeInsets.all(4),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _TypeButton(
+                          title: 'Expense',
+                          isSelected: _transactionType == 'expense',
+                          activeColor: AppColors.error,
+                          onTap: () => setState(() => _transactionType = 'expense'),
+                        ),
+                        _TypeButton(
+                          title: 'Income',
+                          isSelected: _transactionType == 'income',
+                          activeColor: AppColors.success,
+                          onTap: () => setState(() => _transactionType = 'income'),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
-              const SizedBox(height: 20),
-            ],
+            ),
 
             // ─── Amount display ──────────────────────────────────────────
             Padding(
@@ -391,10 +401,16 @@ class _TransactionEntrySheetState extends ConsumerState<TransactionEntrySheet> {
             const SizedBox(height: 8),
 
             // ─── Keypad (hidden when keyboard is visible) ────────────────
-            if (!keyboardOpen) ...[
-              _NumericKeypad(onTap: _onKeypadTap),
-              const SizedBox(height: 10),
-            ],
+            Offstage(
+              offstage: keyboardOpen,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _NumericKeypad(onTap: _onKeypadTap),
+                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
 
             // ─── Save Button ─────────────────────────────────────────────
             Padding(

@@ -12,32 +12,38 @@ class NotificationsSetupPage extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          // Background organic shape (bottom left)
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: ClipPath(
-              clipper: BottomLeftOrganicClipper(),
-              child: Container(
-                width: size.width * 0.7,
-                height: size.height * 0.35,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    colors: [
-                      const Color(0xFFD8EBE2), // light mint
-                      const Color(0xFFD8EBE2).withValues(alpha: 0.0),
-                    ],
+    return PopScope(
+      canPop: context.canPop(),
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        context.go('/profile-setup');
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Stack(
+          children: [
+            // Background organic shape (bottom left)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              child: ClipPath(
+                clipper: BottomLeftOrganicClipper(),
+                child: Container(
+                  width: size.width * 0.7,
+                  height: size.height * 0.35,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                      colors: [
+                        const Color(0xFFD8EBE2), // light mint
+                        const Color(0xFFD8EBE2).withValues(alpha: 0.0),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
 
           SafeArea(
             child: Column(
@@ -267,7 +273,7 @@ class NotificationsSetupPage extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 
   Widget _buildFeatureRow(IconData icon, String text) {

@@ -23,8 +23,8 @@ class SettingsState {
   SettingsState({
     this.isDarkMode = false,
     this.profileImagePath,
-    this.userName = 'Nagaraj',
-    this.userEmail = 'nagaraj@example.com',
+    this.userName = '',
+    this.userEmail = '',
     this.appPin,
     this.isBiometricEnabled = false,
     this.isTwoFactorEnabled = false,
@@ -77,8 +77,8 @@ class SettingsNotifier extends Notifier<SettingsState> {
     return SettingsState(
       isDarkMode: _prefs.getBool(_keyIsDarkMode) ?? false,
       profileImagePath: _prefs.getString(_keyProfileImagePath),
-      userName: _prefs.getString(_keyUserName) ?? 'Nagaraj',
-      userEmail: _prefs.getString(_keyUserEmail) ?? 'nagaraj@example.com',
+      userName: _prefs.getString(_keyUserName) ?? '',
+      userEmail: _prefs.getString(_keyUserEmail) ?? '',
       appPin: _prefs.getString(_keyAppPin),
       isBiometricEnabled: _prefs.getBool(_keyBiometric) ?? false,
       isTwoFactorEnabled: _prefs.getBool(_keyTwoFactor) ?? false,

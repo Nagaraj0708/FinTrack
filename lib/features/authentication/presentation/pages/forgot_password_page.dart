@@ -49,32 +49,38 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          // Background organic shape (top right and bottom left)
-          Positioned(
-            top: 0,
-            right: 0,
-            child: ClipPath(
-              clipper: TopRightOrganicClipper(),
-              child: Container(
-                width: size.width * 0.9,
-                height: size.height * 0.45,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      const Color(0xFFD8EBE2), // light mint
-                      const Color(0xFFD8EBE2).withValues(alpha: 0.2),
-                    ],
+    return PopScope(
+      canPop: context.canPop(),
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        context.go('/login');
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Stack(
+          children: [
+            // Background organic shape (top right and bottom left)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: ClipPath(
+                clipper: TopRightOrganicClipper(),
+                child: Container(
+                  width: size.width * 0.9,
+                  height: size.height * 0.45,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        const Color(0xFFD8EBE2), // light mint
+                        const Color(0xFFD8EBE2).withValues(alpha: 0.2),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -106,7 +112,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: GestureDetector(
-                    onTap: () => context.pop(),
+                    onTap: () {
+                      if (context.canPop()) {
+                        context.pop();
+                      } else {
+                        context.go('/login');
+                      }
+                    },
                     child: Container(
                       width: 44,
                       height: 44,
@@ -237,6 +249,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           ),
         ],
       ),
-    );
+    ));
   }
 }

@@ -78,6 +78,9 @@ class _OtpVerificationPageState extends ConsumerState<OtpVerificationPage> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     final size = MediaQuery.of(context).size;
 
+    final settings = ref.watch(settingsProvider);
+    final email = settings.userEmail.isNotEmpty ? settings.userEmail : 'your email address';
+
     final defaultPinTheme = PinTheme(
       width: 48,
       height: 56,
@@ -97,32 +100,38 @@ class _OtpVerificationPageState extends ConsumerState<OtpVerificationPage> {
       border: Border.all(color: const Color(0xFF1A382D), width: 1.5),
     );
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          // Background organic shape (bottom left)
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: ClipPath(
-              clipper: BottomLeftOrganicClipper(),
-              child: Container(
-                width: size.width * 0.7,
-                height: size.height * 0.35,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    colors: [
-                      const Color(0xFFD8EBE2), // light mint
-                      const Color(0xFFD8EBE2).withValues(alpha: 0.0),
-                    ],
+    return PopScope(
+      canPop: context.canPop(),
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        context.go('/login');
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Stack(
+          children: [
+            // Background organic shape (bottom left)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              child: ClipPath(
+                clipper: BottomLeftOrganicClipper(),
+                child: Container(
+                  width: size.width * 0.7,
+                  height: size.height * 0.35,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                      colors: [
+                        const Color(0xFFD8EBE2), // light mint
+                        const Color(0xFFD8EBE2).withValues(alpha: 0.0),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
 
           SafeArea(
             child: Column(
@@ -133,7 +142,13 @@ class _OtpVerificationPageState extends ConsumerState<OtpVerificationPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: GestureDetector(
-                    onTap: () => context.pop(),
+                    onTap: () {
+                      if (context.canPop()) {
+                        context.pop();
+                      } else {
+                        context.go('/login');
+                      }
+                    },
                     child: Container(
                       width: 44,
                       height: 44,
@@ -180,9 +195,9 @@ class _OtpVerificationPageState extends ConsumerState<OtpVerificationPage> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const Text(
-                          'nagaraj@gmail.com',
-                          style: TextStyle(
+                        Text(
+                          email,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                             color: Color(0xFF1A382D),
@@ -309,6 +324,6 @@ class _OtpVerificationPageState extends ConsumerState<OtpVerificationPage> {
           ),
         ],
       ),
-    );
+    ));
   }
 }

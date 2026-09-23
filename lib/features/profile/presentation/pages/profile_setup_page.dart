@@ -72,32 +72,38 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          // Background organic shape (bottom left)
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: ClipPath(
-              clipper: BottomLeftOrganicClipper(),
-              child: Container(
-                width: size.width * 0.7,
-                height: size.height * 0.35,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    colors: [
-                      const Color(0xFFD8EBE2), // light mint
-                      const Color(0xFFD8EBE2).withValues(alpha: 0.0),
-                    ],
+    return PopScope(
+      canPop: context.canPop(),
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        context.go('/login');
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Stack(
+          children: [
+            // Background organic shape (bottom left)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              child: ClipPath(
+                clipper: BottomLeftOrganicClipper(),
+                child: Container(
+                  width: size.width * 0.7,
+                  height: size.height * 0.35,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                      colors: [
+                        const Color(0xFFD8EBE2), // light mint
+                        const Color(0xFFD8EBE2).withValues(alpha: 0.0),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
 
           SafeArea(
             child: Column(
@@ -279,7 +285,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
           ),
         ],
       ),
-    );
+    ));
   }
 
   Widget _buildInputField({

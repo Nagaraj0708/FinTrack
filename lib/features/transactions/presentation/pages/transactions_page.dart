@@ -303,70 +303,72 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                     }
                   }
 
-                  return CustomScrollView(
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 0,
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: _buildSummaryCardWithIcon(
-                                    'Total Transactions',
-                                    filteredTx.length.toString(),
-                                    '+12%',
-                                    true,
-                                    Icons.receipt_long_rounded,
-                                    const Color(0xFF2196F3),
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Expanded(
-                                  flex: 1,
-                                  child: _buildSummaryCardWithIcon(
-                                    'Total Spent',
-                                    currencyFormat.format(totalSpent),
-                                    '- 6%',
-                                    false,
-                                    Icons.thumb_down_rounded,
-                                    AppColors.error,
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Expanded(
-                                  flex: 1,
-                                  child: _buildSummaryCardWithIcon(
-                                    'Total Income',
-                                    currencyFormat.format(totalIncome),
-                                    '+ 4%',
-                                    true,
-                                    Icons.arrow_downward_rounded,
-                                    AppColors.success,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 0,
                         ),
-
-                      if (filteredTx.isEmpty)
-                        SliverFillRemaining(
-                          child: Center(
-                            child: Text(
-                              'No transactions found',
-                              style: TextStyle(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurface.withValues(alpha: 0.6),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: _buildSummaryCardWithIcon(
+                                'Total Transactions',
+                                filteredTx.length.toString(),
+                                '+12%',
+                                true,
+                                Icons.receipt_long_rounded,
+                                const Color(0xFF2196F3),
                               ),
                             ),
-                          ),
-                        )
+                            SizedBox(width: 8),
+                            Expanded(
+                              flex: 1,
+                              child: _buildSummaryCardWithIcon(
+                                'Total Spent',
+                                currencyFormat.format(totalSpent),
+                                '- 6%',
+                                false,
+                                Icons.thumb_down_rounded,
+                                AppColors.error,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Expanded(
+                              flex: 1,
+                              child: _buildSummaryCardWithIcon(
+                                'Total Income',
+                                currencyFormat.format(totalIncome),
+                                '+ 4%',
+                                true,
+                                Icons.arrow_downward_rounded,
+                                AppColors.success,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Expanded(
+                        child: CustomScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          slivers: [
+                            if (filteredTx.isEmpty)
+                              SliverFillRemaining(
+                                child: Center(
+                                  child: Text(
+                                    'No transactions found',
+                                    style: TextStyle(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface.withValues(alpha: 0.6),
+                                    ),
+                                  ),
+                                ),
+                              )
                       else
                         SliverPadding(
                           padding: const EdgeInsets.fromLTRB(24, 8, 24, 120),
@@ -636,6 +638,9 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                             }, childCount: sortedDates.length),
                           ),
                         ),
+                          ],
+                        ),
+                      ),
                     ],
                   );
                 },
