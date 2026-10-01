@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../app/theme/colors.dart';
 import '../../../../core/providers/settings_provider.dart';
 import '../../../../core/widgets/organic_clippers.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -469,31 +467,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildSocialIconButton(Widget iconWidget, {VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 56,
-        height: 56,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-          border: Border.all(color: const Color(0xFFF0F4F0), width: 1),
-        ),
-        child: Center(
-          child: iconWidget,
-        ),
       ),
     );
   }

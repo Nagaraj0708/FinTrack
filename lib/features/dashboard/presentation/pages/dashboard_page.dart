@@ -40,11 +40,11 @@ class DashboardPage extends ConsumerWidget {
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
-                              color: AppColors.textSecondary,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                           ),
                           const SizedBox(height: 2),
-                          const Text(
+                          Text(
                             'Nagaraj',
                             style: TextStyle(
                               fontSize: 26,
@@ -151,13 +151,13 @@ class DashboardPage extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Recent Transactions',
                             style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w800,
                               letterSpacing: -0.3,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                           GestureDetector(
@@ -314,19 +314,19 @@ class _NotificationsSheet extends StatelessWidget {
             child: const Icon(Icons.notifications_none_rounded, size: 40, color: AppColors.primary),
           ),
           const SizedBox(height: 20),
-          const Text('All caught up!', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.primary)),
+          Text('All caught up!', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.primary)),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'No new notifications. We\'ll let you know\nwhen something needs your attention.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, color: AppColors.textSecondary, height: 1.6),
+            style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.6),
           ),
           const SizedBox(height: 28),
           SizedBox(
             width: double.infinity,
             child: FilledButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Close'),
+              child: Text('Close'),
             ),
           ),
         ],
@@ -362,7 +362,7 @@ class _HeroCard extends ConsumerWidget {
                   decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2)),
                 ),
                 const SizedBox(height: 20),
-                const Text('Select Timeframe', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.primary)),
+                Text('Select Timeframe', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.primary)),
                 const SizedBox(height: 16),
                 _buildFilterOption(context, ref, 'This Month', currentTimeframe),
                 _buildFilterOption(context, ref, 'Last Month', currentTimeframe),
@@ -386,7 +386,7 @@ class _HeroCard extends ConsumerWidget {
         title,
         style: TextStyle(
           fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-          color: isSelected ? AppColors.primary : AppColors.textPrimary,
+          color: isSelected ? AppColors.primary : Theme.of(context).colorScheme.onSurface,
           fontSize: 15,
         ),
       ),
@@ -741,7 +741,7 @@ class _StatCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 3),
-          Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: AppColors.textSecondary)),
+          Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurfaceVariant)),
           const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
@@ -844,14 +844,14 @@ class _RecentTransactionsList extends StatelessWidget {
                         children: [
                           Text(
                             tx.description ?? tx.categoryId ?? 'Transaction',
-                            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.textPrimary),
+                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: Theme.of(context).colorScheme.onSurface),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 2),
                           Text(
                             dateFormat.format(tx.transactionDate),
-                            style: TextStyle(fontSize: 12, color: AppColors.textSecondary, fontWeight: FontWeight.w500),
+                            style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant, fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -900,12 +900,12 @@ class _EmptyState extends StatelessWidget {
             child: const Icon(Icons.account_balance_wallet_outlined, size: 44, color: AppColors.primary),
           ),
           const SizedBox(height: 20),
-          const Text('Start your journey', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.textPrimary)),
+          Text('Start your journey', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: Theme.of(context).colorScheme.onSurface)),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'Add your first transaction\nto see insights here.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, color: AppColors.textSecondary, height: 1.6),
+            style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.6),
           ),
         ],
       ),
@@ -937,13 +937,13 @@ class _SpendingBreakdown extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Spending', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: AppColors.textPrimary)),
-          const Text('Breakdown', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: AppColors.textPrimary)),
+          Text('Spending', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: Theme.of(context).colorScheme.onSurface)),
+          Text('Breakdown', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: Theme.of(context).colorScheme.onSurface)),
           const SizedBox(height: 14),
           if (metrics.categoryBreakdown.isEmpty || metrics.monthlyExpenses == 0)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Center(child: Text('No data yet', style: TextStyle(color: AppColors.textSecondary, fontSize: 12))),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Center(child: Text('No data yet', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12))),
             )
           else ...[
             SizedBox(
@@ -968,9 +968,9 @@ class _SpendingBreakdown extends StatelessWidget {
                         FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(format.format(metrics.monthlyExpenses),
-                              style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: AppColors.textPrimary)),
+                              style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: Theme.of(context).colorScheme.onSurface)),
                         ),
-                        Text('spent', style: TextStyle(fontSize: 9, color: AppColors.textSecondary)),
+                        Text('spent', style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                       ],
                     ),
                   ),
@@ -986,8 +986,8 @@ class _SpendingBreakdown extends StatelessWidget {
                   children: [
                     Container(width: 7, height: 7, decoration: BoxDecoration(color: _catColors[e.key % _catColors.length], shape: BoxShape.circle)),
                     const SizedBox(width: 7),
-                    Expanded(child: Text(e.value.key, style: const TextStyle(fontSize: 10, color: AppColors.textSecondary), overflow: TextOverflow.ellipsis)),
-                    Text('${pct.toStringAsFixed(0)}%', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
+                    Expanded(child: Text(e.value.key, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant), overflow: TextOverflow.ellipsis)),
+                    Text('${pct.toStringAsFixed(0)}%', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface)),
                   ],
                 ),
               );
@@ -1028,7 +1028,7 @@ class _FinancialPulse extends StatelessWidget {
                 child: const Icon(Icons.insights_rounded, size: 13, color: AppColors.primary),
               ),
               const SizedBox(width: 8),
-              const Text('Financial\nPulse', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: AppColors.textPrimary)),
+              Text('Financial\nPulse', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: Theme.of(context).colorScheme.onSurface)),
             ],
           ),
           const SizedBox(height: 16),
@@ -1083,8 +1083,8 @@ class _FinancialPulse extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(t1, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
-                Text(t2, style: const TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+                Text(t1, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Theme.of(ctx).colorScheme.onSurface)),
+                Text(t2, style: TextStyle(fontSize: 10, color: Theme.of(ctx).colorScheme.onSurfaceVariant)),
               ],
             ),
           ),

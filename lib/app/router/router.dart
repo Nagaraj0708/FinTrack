@@ -7,6 +7,7 @@ import '../../features/authentication/presentation/pages/login_page.dart';
 import '../../features/dashboard/presentation/pages/dashboard_page.dart';
 import '../../features/analytics/presentation/pages/analytics_page.dart';
 import '../../features/goals/presentation/pages/goals_page.dart';
+// import '../../features/payments/presentation/pages/pay_dashboard_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/transactions/presentation/pages/transactions_page.dart';
 import '../../features/authentication/presentation/pages/otp_verification_page.dart';
@@ -118,6 +119,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             pageBuilder: (context, state) =>
                 _buildPageWithTransition(const DashboardPage(), state),
           ),
+          // GoRoute(
+          //   path: '/pay',
+          //   pageBuilder: (context, state) =>
+          //       _buildPageWithTransition(const PayDashboardPage(), state),
+          // ),
           GoRoute(
             path: '/transactions',
             pageBuilder: (context, state) =>
@@ -129,16 +135,16 @@ final routerProvider = Provider<GoRouter>((ref) {
                 _buildPageWithTransition(const AnalyticsPage(), state),
           ),
           GoRoute(
-            path: '/goals',
-            pageBuilder: (context, state) =>
-                _buildPageWithTransition(const GoalsPage(), state),
-          ),
-          GoRoute(
             path: '/profile',
             pageBuilder: (context, state) =>
                 _buildPageWithTransition(const ProfilePage(), state),
           ),
         ],
+      ),
+      GoRoute(
+        path: '/goals',
+        pageBuilder: (context, state) =>
+            _buildPageWithTransition(const GoalsPage(), state),
       ),
     ],
   );
@@ -190,6 +196,11 @@ final GoRouter appRouter = GoRouter(
           pageBuilder: (context, state) =>
               _buildPageWithTransition(const DashboardPage(), state),
         ),
+        // GoRoute(
+        //   path: '/pay',
+        //   pageBuilder: (context, state) =>
+        //       _buildPageWithTransition(const PayDashboardPage(), state),
+        // ),
         GoRoute(
           path: '/transactions',
           pageBuilder: (context, state) =>
@@ -201,16 +212,16 @@ final GoRouter appRouter = GoRouter(
               _buildPageWithTransition(const AnalyticsPage(), state),
         ),
         GoRoute(
-          path: '/goals',
-          pageBuilder: (context, state) =>
-              _buildPageWithTransition(const GoalsPage(), state),
-        ),
-        GoRoute(
           path: '/profile',
           pageBuilder: (context, state) =>
               _buildPageWithTransition(const ProfilePage(), state),
         ),
       ],
+    ),
+    GoRoute(
+      path: '/goals',
+      pageBuilder: (context, state) =>
+          _buildPageWithTransition(const GoalsPage(), state),
     ),
   ],
 );
@@ -226,6 +237,12 @@ class _ScaffoldWithBottomNavBar extends StatefulWidget {
       label: 'Home',
       path: '/dashboard',
     ),
+    // _NavItem(
+    //   icon: Icons.account_balance_wallet_outlined,
+    //   activeIcon: Icons.account_balance_wallet_rounded,
+    //   label: 'Pay',
+    //   path: '/pay',
+    // ),
     _NavItem(
       icon: Icons.receipt_long_outlined,
       activeIcon: Icons.receipt_long_rounded,
@@ -237,12 +254,6 @@ class _ScaffoldWithBottomNavBar extends StatefulWidget {
       activeIcon: Icons.insights_rounded,
       label: 'Analytics',
       path: '/analytics',
-    ),
-    _NavItem(
-      icon: Icons.flag_outlined,
-      activeIcon: Icons.flag_rounded,
-      label: 'Goals',
-      path: '/goals',
     ),
     _NavItem(
       icon: Icons.person_outline_rounded,
@@ -263,9 +274,9 @@ class _ScaffoldWithBottomNavBarState extends State<_ScaffoldWithBottomNavBar> {
 
   final List<Widget> _pages = const [
     DashboardPage(),
+    // PayDashboardPage(),
     TransactionsPage(),
     AnalyticsPage(),
-    GoalsPage(),
     ProfilePage(),
   ];
 

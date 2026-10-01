@@ -13,6 +13,7 @@ import '../../../../core/providers/settings_provider.dart';
 import '../../../dashboard/presentation/providers/dashboard_provider.dart';
 import 'personal_info_page.dart';
 import 'security_privacy_page.dart';
+import '../../../payments/presentation/pages/bank_accounts_page.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
@@ -37,7 +38,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             if (ref.read(settingsProvider).profileImagePath != null && ref.read(settingsProvider).profileImagePath!.isNotEmpty)
               ListTile(
                 leading: const Icon(Icons.account_circle_rounded),
-                title: const Text('View Profile Photo'),
+                title: Text('View Profile Photo'),
                 onTap: () {
                   Navigator.pop(context);
                   _showProfilePhotoDialog(ref.read(settingsProvider).profileImagePath!);
@@ -45,7 +46,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ),
             ListTile(
               leading: const Icon(Icons.photo_library_rounded),
-              title: const Text('Update Photo'),
+              title: Text('Update Photo'),
               onTap: () {
                 Navigator.pop(context);
                 _pickImage();
@@ -229,7 +230,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   context.go('/login');
                 }
               },
-              child: const Text(
+              child: Text(
                 'Log Out',
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
@@ -296,7 +297,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 );
               }
             },
-            child: const Text(
+            child: Text(
               'Erase Data',
               style: TextStyle(fontWeight: FontWeight.w700),
             ),
@@ -382,7 +383,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                             leading: const Icon(
                                               Icons.dark_mode_rounded,
                                             ),
-                                            title: const Text('Dark Mode'),
+                                            title: Text('Dark Mode'),
                                             trailing: Switch(
                                               value: settings.isDarkMode,
                                               onChanged: (v) {
@@ -682,6 +683,44 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 ),
                 const SizedBox(height: 24),
                 _SettingsGroup(
+                  title: 'Financial',
+                  items: [
+                    _SettingsItem(
+                      title: 'Goals',
+                      icon: Icons.flag_rounded,
+                      iconBgColor: const Color(0xFF4CAF50).withValues(alpha: 0.1),
+                      iconColor: const Color(0xFF4CAF50),
+                      onTap: () => context.push('/goals'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                _SettingsGroup(
+                  title: 'Payments',
+                  items: [
+                    _SettingsItem(
+                      title: 'Bank Accounts',
+                      icon: Icons.account_balance_rounded,
+                      iconBgColor: const Color(0xFF3F51B5).withValues(alpha: 0.1),
+                      iconColor: const Color(0xFF3F51B5),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => BankAccountsPage(userId: settings.userEmail),
+                        ),
+                      ),
+                    ),
+                    _SettingsItem(
+                      title: 'Payment History',
+                      icon: Icons.history_rounded,
+                      iconBgColor: const Color(0xFF795548).withValues(alpha: 0.1),
+                      iconColor: const Color(0xFF795548),
+                      onTap: () {}, // Full payment history page — coming in next iteration
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                _SettingsGroup(
                   title: 'App Preferences',
                   items: [
                     _SettingsItem(
@@ -891,7 +930,7 @@ class _SettingsGroup extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15,
-                        color: item.titleColor ?? AppColors.textPrimary,
+                        color: item.titleColor ?? Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     trailing:

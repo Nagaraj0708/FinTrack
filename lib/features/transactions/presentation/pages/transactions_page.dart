@@ -38,16 +38,14 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
     final timeFormat = DateFormat('h:mm a');
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFFE6F0EB), // Premium subtle mint glow
-            Colors.white,
-            Color(0xFFF4F7F6),
-          ],
-          stops: [0.0, 0.3, 1.0],
+          colors: Theme.of(context).brightness == Brightness.dark 
+            ? const [Color(0xFF141A17), Color(0xFF0A0F0D), Color(0xFF0A0F0D)]
+            : const [Color(0xFFE6F0EB), Colors.white, Color(0xFFF4F7F6)],
+          stops: const [0.0, 0.3, 1.0],
         ),
       ),
       child: Scaffold(
@@ -683,8 +681,8 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
       builder: (ctx) {
         final isDark = Theme.of(ctx).brightness == Brightness.dark;
         final bgColor = isDark ? AppColors.surfaceDark : Colors.white;
-        final textColor = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
-        final subColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+        final textColor = isDark ? AppColors.textPrimaryDark : Theme.of(context).colorScheme.onSurface;
+        final subColor = isDark ? AppColors.textSecondaryDark : Theme.of(context).colorScheme.onSurfaceVariant;
         return Container(
           decoration: BoxDecoration(
             color: bgColor,
@@ -743,7 +741,7 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
                 width: double.infinity,
                 child: FilledButton(
                   onPressed: () => Navigator.pop(ctx),
-                  child: const Text('Close'),
+                  child: Text('Close'),
                 ),
               ),
             ],
@@ -820,7 +818,7 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
             style: TextStyle(
               fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
               fontSize: 13,
-              color: isSelected ? Colors.white : AppColors.textSecondary,
+              color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ),
@@ -868,10 +866,10 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
             SizedBox(width: 7),
             Text(
               title,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
             ),
             SizedBox(width: 4),
-            Icon(Icons.keyboard_arrow_down_rounded, size: 15, color: AppColors.textSecondary),
+            Icon(Icons.keyboard_arrow_down_rounded, size: 15, color: Theme.of(context).colorScheme.onSurfaceVariant),
           ],
         ),
       ),
@@ -911,11 +909,11 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
             alignment: Alignment.centerLeft,
             child: Text(
               value,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w800,
                 letterSpacing: -0.5,
-                color: AppColors.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ),
@@ -923,7 +921,7 @@ class _TransactionsPageState extends ConsumerState<TransactionsPage> {
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
-            child: Text(title, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: AppColors.textSecondary)),
+            child: Text(title, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurfaceVariant)),
           ),
         ],
       ),

@@ -44,16 +44,14 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
     final monthFormat = DateFormat('MMMM yyyy');
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFFE6F0EB), // Premium subtle mint glow
-            Colors.white,
-            Color(0xFFF4F7F6),
-          ],
-          stops: [0.0, 0.3, 1.0],
+          colors: Theme.of(context).brightness == Brightness.dark 
+            ? const [Color(0xFF141A17), Color(0xFF0A0F0D), Color(0xFF0A0F0D)]
+            : const [Color(0xFFE6F0EB), Colors.white, Color(0xFFF4F7F6)],
+          stops: const [0.0, 0.3, 1.0],
         ),
       ),
       child: Scaffold(
@@ -71,7 +69,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'Analytics',
                         style: TextStyle(
                           fontSize: 28,
@@ -523,7 +521,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Spending by Category',
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
           ),
@@ -741,7 +739,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                             ),
                           );
                         }
-                        return const Text('');
+                        return Text('');
                       },
                     ),
                   ),
@@ -751,7 +749,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                       reservedSize: 36,
                       interval: maxY > 0 ? maxY / 4 : 250,
                       getTitlesWidget: (val, meta) {
-                        if (val == 0) return const Text('');
+                        if (val == 0) return Text('');
                         return Text(
                           '${(val / 1000).toStringAsFixed(maxY < 10000 ? 1 : 0)}K',
                           style: TextStyle(
@@ -922,7 +920,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                             ),
                           );
                         }
-                        return const Text('');
+                        return Text('');
                       },
                     ),
                   ),
@@ -932,7 +930,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                       reservedSize: 32,
                       interval: (maxSpend > 0 ? maxSpend / 4 : 1000.0).clamp(1.0, double.infinity).toDouble(),
                       getTitlesWidget: (val, meta) {
-                        if (val <= 0) return const Text('');
+                        if (val <= 0) return Text('');
                         // Only show non-duplicate integer K values
                         final kValue = (val / 1000).toStringAsFixed(1);
                         return Text(
@@ -1012,7 +1010,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
+          Text(
             'Top Merchants / Spends',
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
           ),
@@ -1207,7 +1205,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
                             ),
                           );
                         }
-                        return const Text('');
+                        return Text('');
                       },
                     ),
                   ),
@@ -1369,7 +1367,7 @@ class _MonthPickerSheetState extends State<_MonthPickerSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Select Month', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.primary)),
+              Text('Select Month', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.primary)),
               
               // Year Dropdown
               PopupMenuButton<int>(
@@ -1383,7 +1381,7 @@ class _MonthPickerSheetState extends State<_MonthPickerSheet> {
                     y.toString(),
                     style: TextStyle(
                       fontWeight: y == _year ? FontWeight.w800 : FontWeight.w600,
-                      color: y == _year ? AppColors.primary : AppColors.textPrimary,
+                      color: y == _year ? AppColors.primary : Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 )).toList(),
@@ -1460,7 +1458,7 @@ class _MonthPickerSheetState extends State<_MonthPickerSheet> {
                           ? Colors.white
                           : isFuture
                               ? Colors.grey.shade300
-                              : AppColors.textPrimary,
+                              : Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ),

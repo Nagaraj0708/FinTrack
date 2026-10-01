@@ -98,7 +98,7 @@ class _TransactionEntrySheetState extends ConsumerState<TransactionEntrySheet> {
                         option,
                         style: TextStyle(
                           fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                          color: isSelected ? AppColors.primary : AppColors.textPrimary,
+                          color: isSelected ? AppColors.primary : Theme.of(context).colorScheme.onSurface,
                           fontSize: 15,
                         ),
                       ),
@@ -381,18 +381,18 @@ class _TransactionEntrySheetState extends ConsumerState<TransactionEntrySheet> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceElevated,
+                                    color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF1E2922) : const Color(0xFFF0F4F0),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFE8F0EC), width: 1.5),
+                  border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
                 ),
                 child: TextField(
                   controller: _noteController,
-                  style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textPrimary, fontSize: 14),
+                  style: TextStyle(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
                   decoration: InputDecoration(
                     icon: const Icon(Icons.notes_rounded, color: AppColors.primary, size: 18),
                     border: InputBorder.none,
                     hintText: 'Add a note (e.g. Petrol, Groceries)',
-                    hintStyle: TextStyle(color: AppColors.textSecondary.withValues(alpha: 0.6), fontWeight: FontWeight.w400, fontSize: 14),
+                    hintStyle: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.6), fontWeight: FontWeight.w400, fontSize: 14),
                   ),
                   onTapOutside: (_) => FocusScope.of(context).unfocus(),
                 ),
@@ -459,7 +459,7 @@ class _TransactionEntrySheetState extends ConsumerState<TransactionEntrySheet> {
                                 color: Colors.white, size: 20,
                               ),
                               const SizedBox(width: 8),
-                              const Text(
+                              Text(
                                 'Save Transaction',
                                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: Colors.white),
                               ),
@@ -612,10 +612,10 @@ class _NumericKeypad extends StatelessWidget {
                       ? Icon(Icons.backspace_outlined, size: 20, color: AppColors.error.withValues(alpha: 0.7))
                       : Text(
                           key,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimary,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                 ),

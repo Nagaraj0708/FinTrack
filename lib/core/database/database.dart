@@ -118,6 +118,106 @@ class SyncQueue extends Table {
   DateTimeColumn get timestamp => dateTime()();
 }
 
+@DataClassName('PaymentIntentData')
+class PaymentIntents extends Table {
+  TextColumn get id => text()();
+  TextColumn get clientRequestId => text().unique()();
+  TextColumn get payeeVpa => text().nullable()();
+  IntColumn get amount => integer()();
+  TextColumn get currency => text().withDefault(const Constant('INR'))();
+  TextColumn get status => text()();
+  TextColumn get description => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DataClassName('PaymentTransactionRecord') // To avoid conflict with domain PaymentTransaction
+class PaymentTransactions extends Table {
+  TextColumn get id => text()();
+  TextColumn get userId => text()();
+  TextColumn get paymentIntentId => text().nullable()();
+  TextColumn get paymentProvider => text()();
+  TextColumn get providerTransactionId => text().nullable()();
+  TextColumn get sourceAccountId => text().nullable()();
+  TextColumn get recipientId => text().nullable()();
+  IntColumn get amount => integer()();
+  TextColumn get currency => text().withDefault(const Constant('INR'))();
+  TextColumn get type => text()();
+  TextColumn get status => text()();
+  TextColumn get merchantName => text().nullable()();
+  TextColumn get merchantVpa => text().nullable()();
+  TextColumn get payerVpa => text().nullable()();
+  TextColumn get payeeVpa => text().nullable()();
+  TextColumn get description => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get completedAt => dateTime().nullable()();
+  TextColumn get failureCode => text().nullable()();
+  TextColumn get failureReason => text().nullable()();
+  TextColumn get metadata => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DataClassName('PaymentRequestData')
+class PaymentRequests extends Table {
+  TextColumn get id => text()();
+  TextColumn get userId => text()();
+  TextColumn get requesterVpa => text()();
+  IntColumn get amount => integer()();
+  TextColumn get note => text().nullable()();
+  TextColumn get status => text()();
+  DateTimeColumn get expiry => dateTime().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DataClassName('BankAccountData')
+class BankAccounts extends Table {
+  TextColumn get id => text()();
+  TextColumn get userId => text()();
+  TextColumn get bankName => text()();
+  TextColumn get maskedAccountNumber => text()();
+  TextColumn get ifsc => text().nullable()();
+  BoolColumn get isDefault => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DataClassName('UpiProfileData')
+class UpiProfiles extends Table {
+  TextColumn get id => text()();
+  TextColumn get userId => text()();
+  TextColumn get vpa => text().unique()();
+  TextColumn get qrCodeData => text()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DataClassName('BeneficiaryData')
+class Beneficiaries extends Table {
+  TextColumn get id => text()();
+  TextColumn get userId => text()();
+  TextColumn get name => text()();
+  TextColumn get vpa => text().nullable()();
+  TextColumn get bankAccountNumber => text().nullable()();
+  TextColumn get ifsc => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     Accounts,
@@ -127,13 +227,19 @@ class SyncQueue extends Table {
     RecurringTransactions,
     Goals,
     SyncQueue,
+    PaymentIntents,
+    PaymentTransactions,
+    PaymentRequests,
+    BankAccounts,
+    UpiProfiles,
+    Beneficiaries,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration {
