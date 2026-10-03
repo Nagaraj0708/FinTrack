@@ -16,10 +16,17 @@ class ProfileSetupPage extends ConsumerStatefulWidget {
 }
 
 class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
-  final _nameController = TextEditingController();
+  late final TextEditingController _nameController;
   final _locationController = TextEditingController();
   bool _isLoading = false;
   File? _profileImage;
+
+  @override
+  void initState() {
+    super.initState();
+    final initialName = ref.read(settingsProvider).userName;
+    _nameController = TextEditingController(text: initialName);
+  }
 
   Future<void> _pickImage() async {
     try {
@@ -79,7 +86,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
         context.go('/login');
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Stack(
           children: [
             // Background organic shape (bottom left)
@@ -128,9 +135,9 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
                           width: 44,
                           height: 44,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).cardColor,
                             shape: BoxShape.circle,
-                            border: Border.all(color: const Color(0xFFF0F4F0), width: 1.5),
+                            border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.03),
@@ -139,7 +146,7 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
                               ),
                             ],
                           ),
-                          child: const Icon(Icons.arrow_back_rounded, color: Color(0xFF1A382D), size: 22),
+                          child: Icon(Icons.arrow_back_rounded, color: Theme.of(context).colorScheme.onSurface, size: 22),
                         ),
                       ),
                       TextButton(
@@ -163,12 +170,12 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Let\'s get to know you',
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.w900,
-                            color: Color(0xFF1A382D),
+                            color: Theme.of(context).colorScheme.onSurface,
                             letterSpacing: -0.5,
                           ),
                           textAlign: TextAlign.center,
@@ -298,9 +305,9 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFF0F4F0), width: 1.5),
+        border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
@@ -311,15 +318,15 @@ class _ProfileSetupPageState extends ConsumerState<ProfileSetupPage> {
       ),
       child: Row(
         children: [
-          Icon(icon, color: const Color(0xFF1A382D), size: 22),
+          Icon(icon, color: Theme.of(context).colorScheme.onSurface, size: 22),
           const SizedBox(width: 16),
           Expanded(
             child: TextFormField(
               controller: controller,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF1A382D),
+                color: Theme.of(context).colorScheme.onSurface,
               ),
               decoration: InputDecoration(
                 isDense: true,

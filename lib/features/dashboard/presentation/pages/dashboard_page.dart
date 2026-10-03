@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../../../app/theme/colors.dart';
 import '../../../transactions/presentation/widgets/transaction_entry_sheet.dart';
+import '../../../../core/providers/settings_provider.dart';
 import '../providers/dashboard_provider.dart';
 
 class DashboardPage extends ConsumerWidget {
@@ -14,6 +15,8 @@ class DashboardPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final metricsAsync = ref.watch(dashboardMetricsProvider);
+    final settings = ref.watch(settingsProvider);
+    final userName = settings.userName.isNotEmpty ? settings.userName : 'Guest';
     final currencyFormat = NumberFormat.currency(locale: 'en_IN', symbol: '₹', decimalDigits: 0);
 
     return Scaffold(
@@ -45,7 +48,7 @@ class DashboardPage extends ConsumerWidget {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            'Nagaraj',
+                            userName,
                             style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.w800,
@@ -273,7 +276,7 @@ class _NotificationButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           shape: BoxShape.circle,
-          border: Border.all(color: const Color(0xFFE8F0EC), width: 1.5),
+          border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.06),
@@ -302,7 +305,7 @@ class _NotificationsSheet extends StatelessWidget {
         children: [
           Container(
             width: 40, height: 4,
-            decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2)),
+            decoration: BoxDecoration(color: Theme.of(context).dividerColor, borderRadius: BorderRadius.circular(2)),
           ),
           const SizedBox(height: 28),
           Container(
@@ -359,7 +362,7 @@ class _HeroCard extends ConsumerWidget {
                 const SizedBox(height: 12),
                 Container(
                   width: 40, height: 4,
-                  decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2)),
+                  decoration: BoxDecoration(color: Theme.of(context).dividerColor, borderRadius: BorderRadius.circular(2)),
                 ),
                 const SizedBox(height: 20),
                 Text('Select Timeframe', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.primary)),
@@ -778,6 +781,8 @@ class _RecentTransactionsList extends StatelessWidget {
       case 'bills': return Icons.flash_on_rounded;
       case 'entertainment': return Icons.movie_creation_rounded;
       case 'salary': return Icons.work_rounded;
+      case 'borrow': return Icons.handshake_rounded;
+      case 'return': return Icons.keyboard_return_rounded;
       default: return Icons.account_balance_wallet_rounded;
     }
   }
@@ -790,6 +795,8 @@ class _RecentTransactionsList extends StatelessWidget {
       case 'bills': return const Color(0xFF00BCD4);
       case 'entertainment': return const Color(0xFF9C27B0);
       case 'salary': return AppColors.success;
+      case 'borrow': return const Color(0xFF3F51B5);
+      case 'return': return const Color(0xFFFF5722);
       default: return AppColors.primary;
     }
   }
@@ -805,7 +812,7 @@ class _RecentTransactionsList extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE8F0EC), width: 1.5),
+        border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.04),
@@ -887,7 +894,7 @@ class _EmptyState extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: const Color(0xFFE8F0EC), width: 1),
+        border: Border.all(color: Theme.of(context).dividerColor, width: 1),
       ),
       child: Column(
         children: [
@@ -931,7 +938,7 @@ class _SpendingBreakdown extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE8F0EC), width: 1),
+        border: Border.all(color: Theme.of(context).dividerColor, width: 1),
         boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.04), blurRadius: 12, offset: const Offset(0, 4))],
       ),
       child: Column(
@@ -1011,7 +1018,7 @@ class _FinancialPulse extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE8F0EC), width: 1),
+        border: Border.all(color: Theme.of(context).dividerColor, width: 1),
         boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.04), blurRadius: 12, offset: const Offset(0, 4))],
       ),
       child: Column(

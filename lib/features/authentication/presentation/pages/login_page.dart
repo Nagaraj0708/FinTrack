@@ -51,8 +51,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     }
 
     // Save profile locally (simulated)
+    String nameToSave = _isSignIn ? email.split('@')[0] : _nameController.text.trim();
     ref.read(settingsProvider.notifier).updatePersonalInfo(
-      _isSignIn ? '' : _nameController.text.trim(),
+      nameToSave,
       email,
     );
 
@@ -69,7 +70,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           // Background organic shapes
@@ -99,9 +100,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           width: 44,
                           height: 44,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).cardColor,
                             shape: BoxShape.circle,
-                            border: Border.all(color: const Color(0xFFF0F4F0), width: 1.5),
+                            border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.03),
@@ -110,7 +111,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               ),
                             ],
                           ),
-                          child: const Icon(Icons.arrow_back_rounded, color: Color(0xFF1A382D), size: 22),
+                          child: Icon(Icons.arrow_back_rounded, color: Theme.of(context).colorScheme.onSurface, size: 22),
                         ),
                       ),
                     ),
@@ -140,11 +141,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           RichText(
-                            text: const TextSpan(
+                            text: TextSpan(
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w900,
-                                color: Color(0xFF1A382D),
+                                color: Theme.of(context).colorScheme.onSurface,
                                 letterSpacing: -0.5,
                               ),
                               children: [
@@ -170,10 +171,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   // Welcome Back
                   Text(
                     _isSignIn ? 'Welcome Back' : 'Join Us',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w900,
-                      color: Color(0xFF1A382D),
+                      color: Theme.of(context).colorScheme.onSurface,
                       letterSpacing: -0.5,
                     ),
                   ),
@@ -192,7 +193,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   Container(
                     height: 50,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF3F5F4),
+                      color: Theme.of(context).cardColor,
+                      border: Border.all(color: Theme.of(context).dividerColor),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: Row(
@@ -415,13 +417,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 8, top: 8, bottom: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8E4), width: 1),
+        border: Border.all(color: Theme.of(context).dividerColor, width: 1),
       ),
       child: Row(
         children: [
-          Icon(icon, color: const Color(0xFF1A382D), size: 22),
+          Icon(icon, color: Theme.of(context).colorScheme.onSurface, size: 22),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -439,10 +441,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 TextFormField(
                   controller: controller,
                   obscureText: isPassword && _obscurePassword,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF1A382D),
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   decoration: InputDecoration(
                     isDense: true,

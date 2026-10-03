@@ -335,7 +335,7 @@ class _TransactionEntrySheetState extends ConsumerState<TransactionEntrySheet> {
                         label: _selectedCategory,
                         onTap: () => _showPicker(
                           'Select Category',
-                          ['Food', 'Transport', 'Shopping', 'Bills', 'Entertainment', 'Salary', 'General', 'Cricket', 'Loan'],
+                          ['General', 'Food', 'Transport', 'Shopping', 'Bills', 'Entertainment', 'Salary', 'Cricket', 'Loan', 'Return'],
                           _selectedCategory,
                           (val) => setState(() => _selectedCategory = val),
                         ),
@@ -367,7 +367,7 @@ class _TransactionEntrySheetState extends ConsumerState<TransactionEntrySheet> {
                   label: _selectedIncomeSource,
                   onTap: () => _showPicker(
                     'Income Source',
-                    ['Salary', 'Freelance', 'Business', 'Rent', 'Investment', 'Gift', 'Dividend', 'Other'],
+                    ['Salary', 'Freelance', 'Business', 'Rent', 'Investment', 'Gift', 'Dividend', 'Borrow', 'Other'],
                     _selectedIncomeSource,
                     (val) => setState(() => _selectedIncomeSource = val),
                   ),
@@ -535,7 +535,7 @@ class _CategorySelector extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.primary.withValues(alpha: 0.06),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFE8F0EC), width: 1),
+          border: Border.all(color: Theme.of(context).dividerColor, width: 1),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
